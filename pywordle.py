@@ -1,7 +1,143 @@
 import random
 import tkinter as tk
-from tkinter import simpledialog
+from tkinter import ttk
+import ctypes
+#from tkinter import simpledialog
 
+###################################
+###################################
+###      HELP SCREEN LOGIC      ###
+################################### 
+###################################
+
+# Actual game logic is below this class
+class pyWordleHelp:
+    def __init__(self):
+        ###############################
+        #        COLOR PALETTE        #
+        ###############################
+        self.dBG = '#2d3436'
+        self.cGreen = '#27ae60'
+        self.sYellow  = '#e67e22'
+        self.wGrey = '#636e72'
+        self.wRed = '#d63031'
+        self.inactv = '#dfe6e9'
+        self.white = '#FFFFFF'
+
+        ###############################
+        #          DRAW HELP          #
+        ############################### 
+        self.helpMaster = tk.Tk()
+        self.helpMaster.geometry("390x600")
+        self.helpMaster.title("PyWordle Help")
+        self.helpMaster['bg'] = self.dBG
+        
+        self.topFrame = tk.Frame(self.helpMaster, bg = self.dBG)
+
+        self.titleLabel = tk.Label(self.topFrame, text = "PyWordle", bg = self.dBG, fg = self.white, font = 'Consolas 32 bold')
+        self.byLabel = tk.Label(self.topFrame, text = "Surya M - Spring 2021 Sim & Soft. Co-Op", bg = self.dBG, fg = self.white, font = 'Consolas 8')
+        
+        helpText = "PyWordle is a Python version of the viral internet game Wordle. The game revolves around guessing a 5-letter word in 6 turns or less. The correct answer is random each game."
+        self.intro = tk.Label(self.topFrame, text = helpText, bg = self.dBG, fg = self.white, font = 'Consolas 10', wraplength=325)
+        self.separator1 = ttk.Separator(self.topFrame, orient='horizontal')
+
+        helpText2 = "Start by guessing any 5-letter word you know in the 'Guess Here' textbox and press the 'Guess' Button. With each guess, you will receive clues as to which letters are in the right / wrong places."
+        self.intro2 = tk.Label(self.topFrame, text = helpText2, bg = self.dBG, fg = self.white, font = 'Consolas 10', wraplength=325)
+        self.separator2 = ttk.Separator(self.topFrame, orient='horizontal')
+
+
+        self.exFrame1 = tk.Frame(self.helpMaster, bg = self.dBG)
+        self.word1 = tk.Button(self.exFrame1, text = "C", relief = 'flat',font = 'Consolas 18 bold', bg = self.cGreen, fg = self.white)
+        self.word2 = tk.Button(self.exFrame1, text = "R", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        self.word3 = tk.Button(self.exFrame1, text = "A", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        self.word4 = tk.Button(self.exFrame1, text = "T", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        self.word5 = tk.Button(self.exFrame1, text = "E", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        
+        self.postFrame1 = tk.Frame(self.helpMaster, bg = self.dBG)
+        helpText3 = "The box for letter 'C' is green. This means 'C' is in the final answer, and is in the right place!"
+        self.intro3= tk.Label(self.postFrame1, text = helpText3, bg = self.dBG, fg = self.white, font = 'Consolas 10', wraplength=325)
+        self.separator3 = ttk.Separator(self.postFrame1, orient='horizontal')
+
+        self.exFrame2 = tk.Frame(self.helpMaster, bg = self.dBG)
+        self.word21 = tk.Button(self.exFrame2, text = "S", relief = 'flat',font = 'Consolas 18 bold', bg = self.sYellow, fg = self.white)
+        self.word22 = tk.Button(self.exFrame2, text = "A", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        self.word23 = tk.Button(self.exFrame2, text = "L", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        self.word24 = tk.Button(self.exFrame2, text = "A", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        self.word25 = tk.Button(self.exFrame2, text = "D", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        
+        self.postFrame2 = tk.Frame(self.helpMaster, bg = self.dBG)
+        helpText4 = "The box for letter 'S' is orange. This means 'S' is in the final answer, but is not guessed in the right place."
+        self.intro4= tk.Label(self.postFrame2, text = helpText4, bg = self.dBG, fg = self.white, font = 'Consolas 10', wraplength=325)
+        self.separator4 = ttk.Separator(self.postFrame2, orient='horizontal')
+
+        self.exFrame3 = tk.Frame(self.helpMaster, bg = self.dBG)
+        self.word31 = tk.Button(self.exFrame3, text = "B", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        self.word32 = tk.Button(self.exFrame3, text = "E", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        self.word33 = tk.Button(self.exFrame3, text = "A", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        self.word34 = tk.Button(self.exFrame3, text = "C", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        self.word35 = tk.Button(self.exFrame3, text = "H", relief = 'flat',font = 'Consolas 18 bold', bg = self.wGrey, fg = self.white)
+        
+        self.postFrame3 = tk.Frame(self.helpMaster, bg = self.dBG)
+        helpText5 = "All boxes are grey. This means none of these letters are in the final answer."
+        self.intro5= tk.Label(self.postFrame3, text = helpText5, bg = self.dBG, fg = self.white, font = 'Consolas 10', wraplength=325)
+        self.separator5 = ttk.Separator(self.postFrame3, orient='horizontal')
+
+        self.postFrame4 = tk.Frame(self.helpMaster, bg = self.dBG)
+        helpText6 = "Remember, letters may repeat. Happy Guessing!"
+        self.intro6= tk.Label(self.postFrame4, text = helpText6, bg = self.dBG, fg = self.white, font = 'Consolas 10', wraplength=325)
+
+        self.topFrame.pack()
+        self.titleLabel.pack()
+        self.byLabel.pack()
+        self.separator1.pack(fill='x')
+        
+        self.intro.pack(pady = 2)
+        self.intro2.pack(pady = 2)
+        self.separator2.pack(fill='x')
+
+        self.exFrame1.pack()
+        self.word1.grid(row=0, column=0, pady = 3, padx = 2)
+        self.word2.grid(row=0, column=1, pady = 3, padx = 2)
+        self.word3.grid(row=0, column=2, pady = 3, padx = 2)
+        self.word4.grid(row=0, column=3, pady = 3, padx = 2)
+        self.word5.grid(row=0, column=4, pady = 3, padx = 2)
+
+        self.postFrame1.pack()
+        self.intro3.pack()
+        self.separator3.pack(fill='x')
+
+        self.exFrame2.pack()
+        self.word21.grid(row=0, column=0, pady = 3, padx = 2)
+        self.word22.grid(row=0, column=1, pady = 3, padx = 2)
+        self.word23.grid(row=0, column=2, pady = 3, padx = 2)
+        self.word24.grid(row=0, column=3, pady = 3, padx = 2)
+        self.word25.grid(row=0, column=4, pady = 3, padx = 2)
+
+        self.postFrame2.pack()
+        self.intro4.pack()
+        self.separator4.pack(fill='x')
+
+        self.exFrame3.pack()
+        self.word31.grid(row=0, column=0, pady = 3, padx = 2)
+        self.word32.grid(row=0, column=1, pady = 3, padx = 2)
+        self.word33.grid(row=0, column=2, pady = 3, padx = 2)
+        self.word34.grid(row=0, column=3, pady = 3, padx = 2)
+        self.word35.grid(row=0, column=4, pady = 3, padx = 2)
+
+        self.postFrame3.pack()
+        self.intro5.pack()
+        self.separator5.pack(fill='x')
+
+        self.postFrame4.pack()
+        self.intro6.pack()
+
+        self.helpMaster.mainloop()
+
+###################################
+###################################
+###       MAIN GAME LOGIC       ###
+################################### 
+###################################
 class pyWordle:
 
     def initGrid(self):
@@ -13,11 +149,19 @@ class pyWordle:
         for row in range(2, self.numTurns + 2):
             for col in range(0, self.numChars):
                 if row == 2:
-                    self.currButton = tk.Button(self.masterFrame, bg = self.wGrey, fg=self.white, relief = 'flat', font = 'Segoe_UI 18 bold', text = "   ")
+                    self.currButton = tk.Button(self.masterFrame, bg = self.inactv, fg=self.inactv, relief = 'flat', font = 'Consolas 18 bold', text = " ")
                 else:
-                    self.currButton = tk.Button(self.masterFrame, bg = self.inactv, fg=self.white, relief = 'flat',font = 'Segoe_UI 18 bold', text = "   ")
+                    self.currButton = tk.Button(self.masterFrame, bg = self.inactv, fg=self.inactv, relief = 'flat',font = 'Consolas 18 bold', text = " ")
                 self.currButton.grid(row = row, column= col, padx = 5, pady = 5)
                 self.allObjs.append(self.currButton)
+    
+    def keyIndex(self,key):
+        #################################
+        #          FETCH KEY ID         #
+        #################################
+        allkeys = ['q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m']
+        idx = allkeys.index(key.lower())
+        return idx
 
     def initkbd(self):
         ###############################
@@ -25,34 +169,37 @@ class pyWordle:
         ############################### 
         chars1 = "QWERTYUIOP"
         chars2 = "ASDFGHJKL"
-        chars3 = "ZXCBNM"
+        chars3 = "ZXCVBNM"
         self.keyboard = []
 
         for charNum in range(0, len(chars1)):
             currChar = chars1[charNum]
-            self.currButton = tk.Button(self.kb1, bg = self.wGrey, fg=self.white, relief = 'flat', font = 'Segoe_UI 12', text = currChar)
+            self.currButton = tk.Button(self.kb1, bg = self.inactv, fg=self.wGrey, relief = 'flat', font = 'Consolas 12', text = currChar)
             self.currButton.grid(row = 0, column = charNum, padx = 1, pady = 1)
             self.keyboard.append(self.currButton)
 
         for charNum in range(0, len(chars2)):
             currChar = chars2[charNum]
-            self.currButton = tk.Button(self.kb2, bg = self.wGrey, fg=self.white, relief = 'flat', font = 'Segoe_UI 12', text = currChar)
+            self.currButton = tk.Button(self.kb2, bg = self.inactv, fg=self.wGrey, relief = 'flat', font = 'Consolas 12', text = currChar)
             self.currButton.grid(row = 0, column = charNum, padx = 1, pady = 1)
             self.keyboard.append(self.currButton)
 
         for charNum in range(0, len(chars3)):
             currChar = chars3[charNum]
-            self.currButton = tk.Button(self.kb3, bg = self.wGrey, fg=self.white, relief = 'flat', font = 'Segoe_UI 12', text = currChar)
+            self.currButton = tk.Button(self.kb3, bg = self.inactv, fg=self.wGrey, relief = 'flat', font = 'Consolas 12', text = currChar)
             self.currButton.grid(row = 0, column = charNum, padx = 1, pady = 1)
             self.keyboard.append(self.currButton)
+
+    def initHelp(self):
+        self.helpWindow = pyWordleHelp();
             
     def start(self):
         ###############################
         #        COLOR PALETTE        #
         ###############################
         self.dBG = '#2d3436'
-        self.cGreen = '#00b894'
-        self.sYellow  = '#fdcb6e'
+        self.cGreen = '#27ae60'
+        self.sYellow  = '#e67e22'
         self.wGrey = '#636e72'
         self.wRed = '#d63031'
         self.inactv = '#dfe6e9'
@@ -63,11 +210,11 @@ class pyWordle:
         #################################
         self.master = tk.Tk()
         
-        self.numTurns = simpledialog.askinteger("Begin Game:", "Number of turns (6 is optimal):",
-                                        parent=self.master,
-                                        minvalue=1, maxvalue=15)
+        self.numTurns = 6
+        #self.numTurns = simpledialog.askinteger("Begin Game:", "Number of turns (6 is optimal):",
+        #                                parent=self.master,
+        #                                minvalue=1, maxvalue=15)
         self.answer = random.choice(self.allAns)
-        print(self.answer)
 
         #################################
         #           GUI SETUP           #
@@ -75,14 +222,14 @@ class pyWordle:
 
         self.guessInput = tk.StringVar()
 
-        self.master.geometry("390x375")
+        self.master.geometry("390x650")
         self.master.title("PyWordle")
         self.master['bg'] = self.dBG
 
         self.masterFrame = tk.Frame(self.master, bg = self.dBG)
 
-        self.titleLabel = tk.Label(self.masterFrame, text = "PyWordle", bg = self.dBG, fg = self.white, font = 'Segoe_UI 32 bold')
-        self.byLabel = tk.Label(self.master, text = "Surya M", bg = self.dBG, fg = self.white, font = 'Segoe_UI 8')
+        self.titleLabel = tk.Label(self.masterFrame, text = "PyWordle", bg = self.dBG, fg = self.white, font = 'Consolas 32 bold')
+        self.helpButton = tk.Button(self.master, text = "How To Play", bg = self.wGrey, fg = self.white, font = 'Consolas 8', command = lambda:self.initHelp(), relief = 'flat')
 
         self.inputFrame =  tk.Frame(self.master, bg = self.dBG)
         self.guessLabel = tk.Label(self.inputFrame, text = "Guess Here:", bg = self.dBG, fg = self.white)
@@ -116,8 +263,8 @@ class pyWordle:
         self.kb1.pack()
         self.kb2.pack()
         self.kb3.pack()
-        self.byLabel.pack()
 
+        self.helpButton.pack(pady = 3)
         self.master.mainloop()
 
     def charLimiter(self):
@@ -125,24 +272,93 @@ class pyWordle:
             self.guessInput.set((self.guessInput.get())[0:(self.numChars)])
 
     def checkGuess(self):
+        #################################
+        #      CHECK GUESS VALIDITY     #
+        #################################
         self.feedback['text'] = ""
         self.guessedWord = str(self.guessInput.get()).lower()
 
-        if self.guessedWord not in self.allGuess:
+        if (self.guessedWord not in self.allGuess) and (self.guessedWord not in self.allAns):
             self.feedback['text'] = "'" + self.guessedWord + "' is not a valid word. Try again."
             self.guessInput.set("")
+        else:
+            self.currRow += 1
+            self.gradeResp()
+            self.updateGrid()
+            self.guessInput.set("")
 
+    def gradeResp(self):
+        #################################
+        #          SCORE GUESS          #
+        #################################
+        guessArr = list(self.guessedWord)
+        actArr = list(self.answer)
 
+        self.equals = []
+        for idx in range(0,self.numChars):
+            self.equals.append((guessArr[idx] == actArr[idx]))
 
-    @staticmethod
-    def keyindex(key):
-        allkeys = ['q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m']
-        key = chr(key)
-        idx = allkeys.index(key)
-        return idx
+        self.contained = []
+        for idx in range(0, self.numChars):
+            if guessArr[idx] in actArr:
+                self.contained.append(1)
+            else:
+                self.contained.append(0)
+
+        self.score = []
+        for idx in range(0, self.numChars):
+            if self.contained[idx] and self.equals[idx]:
+                self.score.append(2)
+            elif self.contained[idx] and not self.equals[idx]:
+                self.score.append(1)
+            else:
+                self.score.append(0)
+
+    def updateGrid(self):
+        #################################
+        #       UPDATE GRID & KBD       #
+        #################################
+        minIdx =  (self.currRow * self.numChars) - self.numChars
+        maxIdx = (self.currRow * self.numChars)
+        
+        guess = list(self.guessedWord.upper())
+        wordIdx = 0
+        for idx in range(minIdx, maxIdx):
+            currButton = self.allObjs[idx]
+            keyNum = self.keyIndex(guess[wordIdx])
+
+            currKey = self.keyboard[keyNum]
+            currButton['text'] = guess[wordIdx]
+            
+            if self.score[wordIdx] == 1:
+                currButton['bg'] = self.sYellow
+                currButton['fg'] = self.white
+                currKey['bg'] = self.sYellow
+                currKey['fg'] = self.white
+            elif self.score[wordIdx] == 2:
+                currButton['bg'] = self.cGreen
+                currButton['fg'] = self.white
+                currKey['bg'] = self.cGreen
+                currKey['fg'] = self.white
+            else:
+                currButton['bg'] = self.wGrey
+                currButton['fg'] = self.white
+                currKey['bg'] = self.wGrey
+                currKey['fg'] = self.white
+            wordIdx += 1
+
+        if self.currRow == self.numTurns:
+            if self.score == [2,2,2,2,2]:
+                ctypes.windll.user32.MessageBoxW(0, "You guessed the word right!","Well Done!")
+            else:
+                playerMessage = "Game over! The correct word was '" + self.answer + "'. Better luck next time!"
+                ctypes.windll.user32.MessageBoxW(0, playerMessage,"Game Over...")
+        if self.score == [2,2,2,2,2]:
+            ctypes.windll.user32.MessageBoxW(0, "You guessed the word right!","Well Done!")
 
     def __init__(self): 
-        self.numChars = 5  
+        self.numChars = 5
+        self.currRow = 0
         #################################
         #     ALL ANSWERS & GUESSES     #
         #################################
